@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Would you Rather?</title>
+
+
+    <link rel="stylesheet" type="text/css" href="mystyles.css">
+
+</head>
+
+<body>
+
+    <script src="jquery.js"></script>
+
+
+
+    <header>
+        <a class="logo" href="index.html">
+            <img src="image.svg" alt="logo">
+        </a>
+        <nav>
+            <ul>
+                <li>View Categories &#9662;
+                    <ul>
+                        <li><a href="mostpopular.html">Most Popular</a></li>
+                        <li><a href="mostliked.html">Most Liked</a></li>
+                        <li><a href="mostdisliked.html">Most Disliked</a></li>
+                        <li><a href="mostcommented.html">Most Commented On</a></li>
+                    </ul>
+                </li>
+                <li><a href="createquestion.html">Create a Question</a></li>
+                <li><a href="createaccount.html">Create an Account</a></li>
+            </ul>
+
+
+        </nav>
+
+        <div class="hamburger">
+            <div class="line"></div>
+            <div class="line"></div>
+            <div class="line"></div>
+
+        </div>
+
+        <form id="signin" action="">
+
+            <div>
+                <label>Username: <input id="username" type="text" name="username" value="" required></label>
+                <label>Password: <input id="password" type="password" name="password" value="" required></label>
+
+                <p></p>
+                <input id="login" type="button" value="Login">
+            </div>
+
+        </form>
+
+    </header>
+
+
+
+    <div class="hamburgerbackground"></div>
+
+    <ul class="mobilenav">
+        <li><a href="categories.html">Categories</a></li>
+        <li><a href="createquestion.html">Create A Question</a></li>
+        <li><a href="createaccount.html">Create An Account</a></li>
+        <li><a href="loginpage.html">Account Login</a></li>
+    </ul>
+
+    <main>
+
+        <form id="createquestion" action="https://formspree.io/moqvlklj" method="POST">
+
+            <div>
+                <label>Left Side Question: <br><input type="text" name="left_question" value="" required></label>
+                <label>Left Side Image URL (Optional): <br><input type="text" name="left_image" value=""></label>
+                <label>Right Side Question: <br><input type="text" name="right_question" value="" required></label>
+                <label>Right Side Image URL (Optional): <br><input type="text" name="right_image" value=""></label>
+
+                <input type="submit" value="Submit Question">
+            </div>
+
+        </form>
+
+    </main>
+
+
+    <footer>
+        <p>Copyright 2020 MM Enterprises :)</p>
+
+
+    </footer>
+
+
+    <script>
+        $(document).ready(function() {
+
+            $("#login").click(function() {
+
+                var username = $('#username').val();
+                var password = $('#password').val();
+
+
+                if (localStorage.getItem("username") === username && localStorage.getItem("password") === password) {
+
+                    sessionStorage.setItem("loggedIn", "true");
+                    location.reload();
+
+                } else {
+                    alert("Incorrect username or password");
+                    $("#username").val("");
+                    $("#password").val("");
+                }
+            });
+
+
+            if (sessionStorage.getItem("loggedIn")) {
+                $("#signin label").hide();
+                $("#login").hide();
+                $("#signin p").show();
+
+                $("#signin p").html("Signed in as, " + localStorage.getItem("username"));
+
+            }
+
+            $(".hamburger").click(function() {
+
+
+                if ($(".hamburgerbackground").hasClass('activeState')) {
+                    $(".hamburgerbackground").removeClass('activeState');
+                    $("main").removeClass('activeState');
+                    $(".mobilenav").removeClass('activeState');
+
+
+                    $("footer").show();
+
+                } else {
+                    $(".hamburgerbackground").addClass('activeState');
+                    $("main").addClass('activeState');
+                    $(".mobilenav").addClass('activeState');
+
+                    if ($(".comments").hasClass('activeState')) {
+                        $(".comments").removeClass('activeState');
+                    }
+                    $("footer").hide();
+                }
+
+            });
+
+
+
+        });
+    </script>
+
+
+
+
+</body></html>

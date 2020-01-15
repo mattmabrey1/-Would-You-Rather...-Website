@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Would you Rather?</title>
+
+       
+        <link rel="stylesheet" type="text/css" href="mystyles.css">
+
+</head>
+
+<body>
+
+    <script src="jquery.js"></script>
+
+
+
+    <header>
+        <a class="logo" href="index.html">
+            <img src="image.svg" alt="logo">
+        </a>
+        <nav>
+            <ul>
+                <li>View Categories &#9662;
+                    <ul>
+                        <li><a href="mostpopular.html">Most Popular</a></li>
+                        <li><a href="mostliked.html">Most Liked</a></li>
+                        <li><a href="mostdisliked.html">Most Disliked</a></li>
+                        <li><a href="mostcommented.html">Most Commented On</a></li>
+                    </ul>
+                </li>
+                <li><a href="createquestion.html">Create a Question</a></li>
+                <li><a href="createaccount.html">Create an Account</a></li>
+            </ul>
+
+
+        </nav>
+        
+        <div class="hamburger">
+                <div class="line"></div>
+                <div class="line"></div>
+                <div class="line"></div>
+            
+        </div>
+        
+        <form id="signin" action="/action_page.php">
+
+            <div>
+                <label>Username: <input type="text" name="username" value=""></label>
+                <label>Password: <input type="password" name="password" value=""></label>
+
+                <input type="submit" value="Sign In">
+            </div>
+
+        </form>
+    </header>
+
+    <div class="hamburgerbackground"></div>
+    
+    <ul class="mobilenav">
+        <li><a href="categories.html">Categories</a></li>
+        <li><a href="createquestion.html">Create A Question</a></li>
+        <li><a href="createaccount.html">Create An Account</a></li>
+        <li><a href="loginpage.html">Account Login</a></li>
+    </ul>
+    
+    <main>
+        
+         <article>
+
+            <ul class="mobilecategories">
+                <li><a href="mostpopular.html">Most Popular</a></li>
+                <li><a href="mostliked.html">Most Liked</a></li>
+                <li><a href="mostdisliked.html">Most Disliked</a></li>
+                <li><a href="mostcommented.html">Most Commented On</a></li>    
+            </ul>
+
+
+
+
+        </article>
+    
+    
+    </main>
+    
+    
+     <footer>
+        <p>Copyright 2020 MM Enterprises :)</p>
+
+
+    </footer>
+
+
+    <script>
+        $(document).ready(function() {
+
+            $(".hamburger").click(function() {
+
+
+                if ($(".hamburgerbackground").hasClass('activeState')) {
+                    $(".hamburgerbackground").removeClass('activeState');
+                    $("main").removeClass('activeState');
+                    $(".mobilenav").removeClass('activeState');
+                } else {
+                    $(".hamburgerbackground").addClass('activeState');
+                    $("main").addClass('activeState');
+                    $(".mobilenav").addClass('activeState');
+                }
+
+            });
+
+
+        });
+
+    </script>
+    
+
+
+</body>
+
+</html>

@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Would you Rather?</title>
+    <link rel="stylesheet" type="text/css" href="mystyles.css">
+</head>
+
+<body>
+    <script src="jquery.js"></script>
+
+
+
+    <header>
+        <a class="logo" href="index.html">
+            <img src="image.svg" alt="logo">
+        </a>
+
+
+        <nav>
+            <ul>
+                <li>View Categories &#9662;
+                    <ul>
+                        <li><a href="mostpopular.html">Most Popular</a></li>
+                        <li><a href="mostliked.html">Most Liked</a></li>
+                        <li><a href="mostdisliked.html">Most Disliked</a></li>
+                        <li><a href="mostcommented.html">Most Commented On</a></li>
+                    </ul>
+                </li>
+                <li><a href="createquestion.html">Create a Question</a></li>
+                <li><a href="createaccount.html">Create an Account</a></li>
+            </ul>
+
+
+        </nav>
+
+        <div class="hamburger">
+            <div class="line"></div>
+            <div class="line"></div>
+            <div class="line"></div>
+
+        </div>
+
+        <form id="signin" action="">
+
+            <div>
+                <label>Username: <input id="username" type="text" name="username" value="" required></label>
+                <label>Password: <input id="password" type="password" name="password" value="" required></label>
+
+                <p></p>
+                <input id="login" type="button" value="Login">
+            </div>
+
+        </form>
+
+    </header>
+
+    <div class="hamburgerbackground"></div>
+
+    <ul class="mobilenav">
+        <li><a href="categories.html">Categories</a></li>
+        <li><a href="createquestion.html">Create A Question</a></li>
+        <li><a href="createaccount.html">Create An Account</a></li>
+        <li><a href="loginpage.html">Account Login</a></li>
+    </ul>
+
+    <main class="wrapper">
+
+        <section id="leftside">
+            <h2> </h2>
+            <p></p>
+            <div class="imgTop"></div>
+            <div></div>
+            <img id="leftimage" src="https://live.staticflickr.com/65535/49095958702_463981c1b8_h.jpg" alt="leftimage">
+            <button id="leftquestion">Select</button>
+
+        </section>
+        <section id="rightside">
+            <h2> </h2>
+            <p></p>
+            <div class="imgTop"></div>
+            <div></div>
+            <img id="rightimage" src="https://live.staticflickr.com/65535/49095958702_463981c1b8_h.jpg" alt="right">
+            <button id="rightquestion">Select</button>
+
+
+
+        </section>
+
+        <img id="nextquestionarrow" src="right-arrow.svg" alt="rightarrow">
+
+
+    </main>
+
+    <footer>
+        <img src="image.svg" alt="commentarrow">
+
+        <form class="comments" action="">
+
+            <div>
+                <label>Comment: <input id="comment" type="text" name="comment" value=""></label>
+                <input id="commentSubmit" type="button" value="Submit">
+                <input id="like" type="button" value="Like">
+                <input id="dislike" type="button" value="Dislike">
+                <p></p>
+                <p>user812: This question is funny</p>
+                <p>user101: Not really</p>
+                <p>user004: IDK he has a point.</p>
+                <p>user420: lol</p>
+
+            </div>
+
+        </form>
+
+    </footer>
+
+
+    <script>
+        $(document).ready(function() {
+
+
+            //            LOGIN SCRIPTS             //
+
+
+            $("#login").click(function() {
+
+                var username = $('#username').val();
+                var password = $('#password').val();
+
+
+                if (localStorage.getItem("username") === username && localStorage.getItem("password") === password) {
+
+                    sessionStorage.setItem("loggedIn", "true");
+
+                    location.reload();
+
+
+                } else {
+                    alert("Incorrect username or password");
+                    $("#username").val("");
+                    $("#password").val("");
+                }
+            });
+
+
+            if (sessionStorage.getItem("loggedIn")) {
+                $("#signin label").hide();
+                $("#login").hide();
+                $("#signin p").show();
+
+                $("#signin p").html("Signed in as, " + localStorage.getItem("username"));
+
+            }
+
+            //            COMMENT SECTION SCRIPTS             //
+
+            $("#commentSubmit").click(function() {
+
+                if (sessionStorage.getItem("loggedIn")) {
+                    var comment = $('#comment').val();
+
+                    $(".comments p").each(function() {
+
+                        if ($(this).is(":empty")) {
+
+                            $(this).html(localStorage.getItem("username") + ": " + comment);
+                            $("#comment").val("");
+
+                        }
+                    });
+
+                } else {
+                    alert("Please create an account to comment.");
+                }
+            });
+
+            var likeStatus = ""
+            var randomLikes = Math.round(1000 * Math.random());
+            var randomDislikes = Math.round(1000 * Math.random());
+
+            $("#like").click(function() {
+
+                if (likeStatus === "dislike" || likeStatus === "") {
+
+                    $("#like").val(randomLikes + "+");
+                    $("#like").css("color", "green");
+                    like = 1;
+                    $("#dislike").val("Dislike");
+                    $("#dislike").css("color", "#05386B");
+
+                }
+
+            });
+
+            $("#dislike").click(function() {
+
+                if (likeStatus === "like" || likeStatus === "") {
+                    $("#dislike").val(randomDislikes + "-");
+                    $("#dislike").css("color", "red");
+                    like = "";
+                    $("#like").val("Like");
+                    $("#like").css("color", "#05386B");
+                }
+
+            });
+
+
+            //            HAMBURGER MOBILE MENU SCRIPTS             //
+
+            $(".hamburger").click(function() {
+
+
+                if ($(".hamburgerbackground").hasClass('activeState')) {
+                    $(".hamburgerbackground").removeClass('activeState');
+                    $("main").removeClass('activeState');
+                    $(".mobilenav").removeClass('activeState');
+
+
+                    $("footer").show();
+
+                } else {
+                    $(".hamburgerbackground").addClass('activeState');
+                    $("main").addClass('activeState');
+                    $(".mobilenav").addClass('activeState');
+
+                    if ($(".comments").hasClass('activeState')) {
+                        $(".comments").removeClass('activeState');
+                    }
+                    $("footer").hide();
+                }
+
+            });
+
+
+            //            RANDOM QUESTION AND IMAGE GENERATION SCRIPTS             //
+
+            var leftImage = new Array();
+            var rightImage = new Array();
+
+            var leftQuestion = new Array();
+            var rightQuestion = new Array();
+
+
+            leftImage[0] = "https://live.staticflickr.com/65535/49019460638_59b472d22d_c.jpg";
+            rightImage[0] = "https://live.staticflickr.com/65535/49020181762_e3ccc6da62_z.jpg";
+            leftImage[1] = "https://live.staticflickr.com/65535/49070933817_6a919bb077_c.jpg";
+            rightImage[1] = "https://live.staticflickr.com/65535/49070933822_6dafe60be1_z.jpg";
+            leftImage[2] = "https://live.staticflickr.com/65535/49070904996_b1a8bd3e24_z.jpg";
+            rightImage[2] = "https://live.staticflickr.com/65535/49070221403_a7894293af_b.jpg";
+            leftImage[3] = "https://live.staticflickr.com/65535/49070397123_9429e80aba_c.jpg";
+            rightImage[3] = "https://live.staticflickr.com/65535/49070919281_71a2d6d37d_c.jpg";
+            leftImage[4] = "https://live.staticflickr.com/65535/49129185908_564e827aa4_c.jpg";
+            rightImage[4] = "https://live.staticflickr.com/65535/49129859787_3d8185cfa6_z.jpg";
+            leftImage[5] = "https://live.staticflickr.com/65535/49129185918_a372710cee_n.jpg";
+            rightImage[5] = "https://live.staticflickr.com/65535/49129185928_c59dbbacef_n.jpg";
+            leftImage[6] = "https://live.staticflickr.com/65535/49129185868_a73a83e726_h.jpg";
+            rightImage[6] = "https://live.staticflickr.com/65535/49129859817_78b3c447ef_c.jpg";
+
+
+            leftQuestion[0] = "Never listen to music again";
+            rightQuestion[0] = "Never watch a movie again";
+            leftQuestion[1] = "Never drive a car yourself again";
+            rightQuestion[1] = "Never take a flight again";
+            leftQuestion[2] = "Lose your sense of taste";
+            rightQuestion[2] = "You have to run everywhere you go";
+            leftQuestion[3] = "Only be awake during the day";
+            rightQuestion[3] = "Only be awake at night";
+            leftQuestion[4] = "Live in the past";
+            rightQuestion[4] = "Live in the future";
+            leftQuestion[5] = "Always be barefoot";
+            rightQuestion[5] = "Always wear Crocs";
+            leftQuestion[6] = "Have no hair at all";
+            rightQuestion[6] = "Grow way too much hair";
+
+            var size = leftImage.length;
+            var x = Math.floor(size * Math.random());
+
+            $('#leftimage').attr('src', leftImage[x]);
+            $('#rightimage').attr('src', rightImage[x]);
+
+            $('#leftquestion').html(leftQuestion[x]);
+            $('#rightquestion').html(rightQuestion[x]);
+
+
+            //            PERCENTAGE OVERLAY SCRIPTS             //
+
+            $(".wrapper div").innerWidth($("#leftimage").innerWidth());
+            $(".wrapper div").height($("#leftimage").height());
+
+
+            var rand = Math.round(100 * Math.random());
+            $("#leftside p").html(rand + "%");
+            $("#rightside p").html((100 - rand) + "%");
+            $(".wrapper p").innerWidth($("#leftimage").innerWidth());
+            $(".wrapper p").height($("#leftimage").height());
+            $(".wrapper p").css("line-height", (($("#leftimage").height()) + "px"));
+
+            $(".wrapper button").click(function() {
+                $(".wrapper p").show();
+
+                $(".wrapper div").show();
+                $("#leftside .imgTop").height($("#leftimage").height() * ((100 - rand) / 100));
+                $("#rightside .imgTop").height($("#leftimage").height() * (rand / 100));
+
+            });
+
+            //            NEXT QUESTION GENERATION SCRIPTS             //
+
+            var y = 0;
+            var pastVals = [];
+
+
+            $("#nextquestionarrow").click(function() {
+
+                if (pastVals.length >= (size - 1)) {
+                    pastVals.length = 0;
+                }
+
+
+                pastVals.push(x);
+                y = Math.floor(size * Math.random());
+
+                while ((jQuery.inArray(y, pastVals)) != -1) {
+                    y = Math.floor(size * Math.random());
+                }
+
+
+                x = y;
+
+                $('#leftimage').attr('src', leftImage[y]);
+                $('#rightimage').attr('src', rightImage[y]);
+
+                $('#leftquestion').html(leftQuestion[y]);
+                $('#rightquestion').html(rightQuestion[y]);
+
+                $(".wrapper p, .wrapper div").hide();
+
+                rand = Math.round(100 * Math.random());
+                $(".wrapper div").height($("#leftimage").height());
+                $("#leftside p").html(rand + "%");
+                $("#rightside p").html((100 - rand) + "%");
+
+                if ($(".comments").hasClass('activeState')) {
+                    $(".comments").removeClass('activeState');
+                    $("footer img").show();
+                }
+
+
+                $("#dislike").val("Dislike");
+                $("#dislike").css("color", "#05386B");
+                $("#like").val("Like");
+                $("#like").css("color", "#05386B");
+
+                randomLikes = Math.round(1000 * Math.random());
+                randomDislikes = Math.round(1000 * Math.random());
+
+
+
+            });
+
+
+            //            RESIZING PERCENTAGE OVERLAY SCRIPT            //
+
+            $(window).resize(function() {
+                $(".wrapper p").innerWidth($("#leftimage").innerWidth());
+                $(".wrapper p").height($("#leftimage").height());
+
+                $(".wrapper div").innerWidth($("#leftimage").innerWidth());
+                $(".wrapper div").height($("#leftimage").height());
+                $(".wrapper p").css("line-height", (($("#leftimage").height()) + "px"));
+
+                $("#leftside .imgTop").height($("#leftimage").height() * ((100 - rand) / 100));
+                $("#rightside .imgTop").height($("#rightimage").height() * (rand / 100));
+            });
+
+
+            $("footer").click(function() {
+
+                $("footer img").hide();
+
+                $(".comments").addClass('activeState');
+
+            });
+
+
+        });
+
+    </script>
+
+</body>
+
+</html>
